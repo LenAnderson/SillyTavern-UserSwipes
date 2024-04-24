@@ -1,10 +1,11 @@
-import { chat, eventSource, event_types, messageFormatting, saveChatConditional } from '../../../../script.js';
+import { chat, eventSource, event_types, extractMessageBias, messageFormatting, saveChatConditional } from '../../../../script.js';
+import { getMessageTimeStamp } from '../../../RossAscends-mods.js';
 
 const addDom = (mesDom)=>{
     const getMes = ()=>chat[mesDom.getAttribute('mesid')];
     if (mesDom.querySelector('.stus--btn')) return;
     let counter;
-    const updateCounter = ()=>counter.textContent = `${(getMes().swipe_id ?? 0) + 1} / ${getMes().swipes?.length ?? 1}`;
+    const updateCounter = ()=>counter.textContent = `${(getMes().swipe_id ?? 0) + 1}/${getMes().swipes?.length ?? 1}`;
     const btnLeft = document.createElement('div'); {
         btnLeft.classList.add('stus--btn');
         btnLeft.classList.add('swipe_left');
@@ -55,6 +56,17 @@ const addDom = (mesDom)=>{
             if (mes.swipe_id + 1 >= mes.swipes.length) {
                 requestInput = true;
                 mes.swipes.push('');
+                mes.swipe_info.push({
+                    send_date: getMessageTimeStamp(),
+                    gen_started: null,
+                    gen_finished: null,
+                    extra: {
+                        bias: extractMessageBias(''),
+                        gen_id: Date.now(),
+                        api: 'manual',
+                        model: 'manual swipe',
+                    },
+                });
             }
             mes.swipe_id++;
             mes.mes = mes.swipes[mes.swipe_id];
@@ -90,7 +102,7 @@ const addDom = (mesDom)=>{
 };
 
 const initChat = ()=>{
-    const mesList = Array.from(document.querySelectorAll('#chat .mes[is_user="true"]'));
+    const mesList = Array.from(document.querySelectorAll('#chat .mes'));
     for (const mes of mesList) {
         addDom(mes);
     }
@@ -99,5 +111,6 @@ const initChat = ()=>{
 const init = ()=>{
     eventSource.on(event_types.CHAT_CHANGED, ()=>initChat());
     eventSource.on(event_types.USER_MESSAGE_RENDERED, (mesId)=>addDom(document.querySelector(`#chat .mes[mesid="${mesId}"]`)));
+    eventSource.on(event_types.CHARACTER_MESSAGE_RENDERED, (mesId)=>addDom(document.querySelector(`#chat .mes[mesid="${mesId}"]`)));
 };
 init();

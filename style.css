@@ -1,13 +1,20 @@
-#chat .mes[is_user="true"] {
-	.swipe_left, .swipe_right {
-		&:not(.stus--btn) {
+#chat .mes {
+	&[is_user="true"], &[is_system="true"] {
+		.swipe_left, .swipe_right {
+			&:not(.stus--btn) {
+				display: none;
+			}
+		}
+		&:not(&:has(+.last_mes)):not(.last_mes) .stus--btn {
 			display: none;
 		}
+		&:has(+.last_mes) .mesAvatarWrapper {
+			padding-bottom: var(--avatar-base-height);
+		}
 	}
-	&:not(&:has(+.last_mes)):not(.last_mes) .stus--btn {
-		display: none;
-	}
-	&:has(+.last_mes) .mesAvatarWrapper {
-		padding-bottom: var(--avatar-base-height);
+	&[is_user="false"][is_system="false"] {
+		.stus--btn {
+			display: none;
+		}
 	}
 }
