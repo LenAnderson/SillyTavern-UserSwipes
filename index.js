@@ -47,7 +47,7 @@ const addDom = (mesDom)=>{
             const mes = getMes();
             let requestInput = false;
             if (mes.swipe_id === null || mes.swipe_id === undefined) {
-                mes.swipe_id = 1;
+                mes.swipe_id = 0;
             }
             if (!mes.swipes) {
                 mes.swipes = [mes.mes];
@@ -98,5 +98,6 @@ const initChat = ()=>{
 
 const init = ()=>{
     eventSource.on(event_types.CHAT_CHANGED, ()=>initChat());
+    eventSource.on(event_types.USER_MESSAGE_RENDERED, (mesId)=>addDom(document.querySelector(`#chat .mes[mesid="${mesId}"]`)));
 };
 init();
