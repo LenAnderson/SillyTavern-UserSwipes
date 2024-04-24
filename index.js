@@ -36,7 +36,7 @@ const addDom = (mesDom)=>{
             updateCounter();
         });
         mo.observe(btnLeft, { attributeFilter:['style'], attributes:true });
-        mesDom.querySelector('.swipe_left').insertAdjacentElement('afterend', btnLeft);
+        mesDom.querySelector('.swipe_left').insertAdjacentElement('beforebegin', btnLeft);
     }
     const btnRight = document.createElement('div'); {
         btnRight.classList.add('stus--btn');
@@ -97,7 +97,7 @@ const addDom = (mesDom)=>{
             mo.observe(counter, { childList:true });
             btnRight.append(counter);
         }
-        mesDom.querySelector('.swipe_right').insertAdjacentElement('afterend', btnRight);
+        mesDom.querySelector('.swipe_right').insertAdjacentElement('beforebegin', btnRight);
     }
 };
 
