@@ -53,6 +53,14 @@ const addDom = (mesDom)=>{
             if (!mes.swipes) {
                 mes.swipes = [mes.mes];
             }
+            if (!mes.swipe_info) {
+                mes.swipe_info = [{
+                    send_date: mes.send_date,
+                    gen_started: mes.gen_started,
+                    gen_finished: mes.gen_finished,
+                    extra: JSON.parse(JSON.stringify(mes.extra)),
+                }];
+            }
             if (mes.swipe_id + 1 >= mes.swipes.length) {
                 requestInput = true;
                 mes.swipes.push('');
