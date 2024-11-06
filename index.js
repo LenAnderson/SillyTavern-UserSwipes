@@ -63,7 +63,7 @@ const addDom = (mesDom)=>{
             }
             if (mes.swipe_id + 1 >= mes.swipes.length) {
                 requestInput = true;
-                mes.swipes.push('');
+                mes.swipes.push(mes.mes);
                 mes.swipe_info.push({
                     send_date: getMessageTimeStamp(),
                     gen_started: null,
