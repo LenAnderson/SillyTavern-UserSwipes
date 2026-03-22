@@ -8,12 +8,24 @@
 		&:not(&:has(+.last_mes)):not(.last_mes) .stus--btn {
 			display: none;
 		}
+        &:has(+.last_mes), &.last_mes {
+            .stus--btn {
+                display: flex !important;
+                flex-direction: column;
+                gap: 0.5em;
+                opacity: 0.7 !important;
+                visibility: visible;
+                interactivity: unset;
+                pointer-events: all;
+            }
+        }
 		&:has(+.last_mes) .mesAvatarWrapper {
 			padding-bottom: var(--avatar-base-height);
 		}
         .stus--btn > .stus--counter {
             display: flex !important;
             visibility: visible;
+            opacity: 0.7 !important;
         }
 	}
 	&[is_user="false"][is_system="false"] {
